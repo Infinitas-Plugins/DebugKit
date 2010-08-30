@@ -32,6 +32,6 @@
 		}
 
 		public function onSetupConfig(){
-			return Configure::load('debug_ki.config');
+			return Configure::load('debug_kit.config');
 		}
 	}

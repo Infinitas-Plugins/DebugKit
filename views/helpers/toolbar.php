@@ -145,6 +145,31 @@ class ToolbarHelper extends AppHelper {
 		$out = array();
 		$log = $db->getLog();
 		foreach ($log['log'] as $i => $query) {
+			$shouldDescribe = !strstr($query['query'], 'SHOW FULL COLUMNS') &&
+				!strstr($query['query'], 'DESCRIBE') &&
+				!strstr($query['query'], 'UPDATE');
+			if($shouldDescribe === true){
+				$describe = $db->query('EXPLAIN '.$query['query']);
+				$query['possible_keys'] = str_replace(',', '<br/>', $describe[0][0]['possible_keys']);
+				$query['index_rows'] = $describe[0][0]['rows'];
+				$query['key'] = $describe[0][0]['key'];
+				if(empty($query['key'])){
+					$query['key'] = '<b style="color: red;">NO INDEX</b>';
+				}
+			}
+			else{
+				$query['possible_keys'] = '';
+				$query['index_rows'] = '';
+				$query['key'] = '';
+			}
+
+			if($query['index_rows'] > $query['numRows']){
+				$query['index_rows'] = '<b style="color:red; font-size: 110%;">'.$query['index_rows'].'</b>';
+			}
+			else if($query['index_rows'] == $query['numRows']){
+				$query['index_rows'] = '<b style="color:green; font-size: 110%;">'.$query['index_rows'].'</b>';
+			}
+
 			$isSlow = (
 				$query['took'] > 0 &&
 				$query['numRows'] / $query['took'] != 1 &&
