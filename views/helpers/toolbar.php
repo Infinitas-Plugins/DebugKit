@@ -147,7 +147,10 @@ class ToolbarHelper extends AppHelper {
 		foreach ($log['log'] as $i => $query) {
 			$shouldDescribe = !strstr($query['query'], 'SHOW FULL COLUMNS') &&
 				!strstr($query['query'], 'DESCRIBE') &&
-				!strstr($query['query'], 'UPDATE');
+				!strstr($query['query'], 'UPDATE') &&
+				!strstr($query['query'], 'SELECT CHARACTER_SET_NAME') &&
+				!strstr($query['query'], 'DELETE');
+
 			if($shouldDescribe === true){
 				$describe = $db->query('EXPLAIN '.$query['query']);
 				$query['possible_keys'] = str_replace(',', '<br/>', $describe[0][0]['possible_keys']);
