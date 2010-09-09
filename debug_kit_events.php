@@ -24,4 +24,8 @@
 		 public function onRequireComponentsToLoad(){
 			 return 'DebugKit.Toolbar';
 		 }
+
+		 public function onSetupConfig(){
+			 return Configure::load('debug_ki.config');
+		 }
 	 }
