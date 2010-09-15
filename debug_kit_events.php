@@ -20,8 +20,18 @@
 	 * Redistributions of files must retain the above copyright notice.
 	 */
 
-	 final class DebugKitEvents extends AppEvents{
-		 public function onRequireComponentsToLoad(){
-			 return 'DebugKit.Toolbar';
-		 }
-	 }
+	final class DebugKitEvents extends AppEvents{
+		public function onAttachBehaviors(){
+			if(is_subclass_of($event->Handler, 'Model')){
+				$event->Handler->Behaviors->attach('DebugKit.Timed');
+			}
+		}
+		
+		public function onRequireComponentsToLoad(){
+			return 'DebugKit.Toolbar';
+		}
+
+		public function onSetupConfig(){
+			return Configure::load('debug_ki.config');
+		}
+	}
