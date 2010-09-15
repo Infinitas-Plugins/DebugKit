@@ -144,12 +144,22 @@ class ToolbarHelper extends AppHelper {
 		
 		$out = array();
 		$log = $db->getLog();
+		$this->log(Router::url($this->here, true), 'queries');
 		foreach ($log['log'] as $i => $query) {
-			$shouldDescribe = !strstr($query['query'], 'SHOW FULL COLUMNS') &&
-				!strstr($query['query'], 'DESCRIBE') &&
+			$skip =
+				strstr($query['query'], 'SHOW FULL COLUMNS') ||
+				strstr($query['query'], 'DESCRIBE') ||
+				strstr($query['query'], 'SELECT CHARACTER_SET_NAME') ||
+				$query['query'] == 'SHOW TABLES;';
+			if($skip){
+				continue;
+			}
+
+			$shouldDescribe =
 				!strstr($query['query'], 'UPDATE') &&
-				!strstr($query['query'], 'SELECT CHARACTER_SET_NAME') &&
 				!strstr($query['query'], 'DELETE');
+			
+			$this->log($query['query'], 'queries');
 
 			if($shouldDescribe === true){
 				$describe = $db->query('EXPLAIN '.$query['query']);
@@ -196,6 +206,7 @@ class ToolbarHelper extends AppHelper {
 			}
 			$out[] = $query;
 		}
+		$this->log('========== END ==========', 'queries');
 		if ($options['cache']) {
 			$existing = $this->readCache('sql_log');
 			$existing[$connection] = $out;
