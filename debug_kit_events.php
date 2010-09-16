@@ -21,7 +21,7 @@
 	 */
 
 	final class DebugKitEvents extends AppEvents{
-		public function onAttachBehaviors(){
+		public function onAttachBehaviors(&$event){
 			if(is_subclass_of($event->Handler, 'Model')){
 				$event->Handler->Behaviors->attach('DebugKit.Timed');
 			}
