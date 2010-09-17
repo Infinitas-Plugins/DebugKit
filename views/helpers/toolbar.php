@@ -156,6 +156,7 @@ class ToolbarHelper extends AppHelper {
 			}
 
 			$shouldDescribe =
+				!strstr($query['query'], 'INSERT INTO') &&
 				!strstr($query['query'], 'UPDATE') &&
 				!strstr($query['query'], 'DELETE');
 			
