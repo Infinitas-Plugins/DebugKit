@@ -150,6 +150,7 @@ class ToolbarHelper extends AppHelper {
 				strstr($query['query'], 'SHOW FULL COLUMNS') ||
 				strstr($query['query'], 'DESCRIBE') ||
 				strstr($query['query'], 'SELECT CHARACTER_SET_NAME') ||
+				strstr($query['query'], 'set profiling') ||
 				$query['query'] == 'SHOW TABLES;';
 			if($skip){
 				continue;
