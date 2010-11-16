@@ -375,3 +375,7 @@
 	content : ' Loading...';
 	font-style:italic;
 }
+
+#debug-kit-toolbar .duplicate{
+	background-color: #FAE059;
+}

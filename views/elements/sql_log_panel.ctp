@@ -36,6 +36,13 @@ if (isset($debugKitInHistoryMode)) {
 			else:
 				$queryLog = $content[$dbName];
 			endif;
+			$_checked = array();
+			foreach($queryLog as $k => $query){
+				if(in_array($query['query'], $_checked)){
+					$queryLog[$k]['query'] = '<b class="duplicate">' . $query['query'] . '</b>';
+				}
+				$_checked[] = $query['query'];
+			}
 			echo $toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
 		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>
