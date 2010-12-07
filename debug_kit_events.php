@@ -38,6 +38,10 @@
 		}
 
 		public function onRequireJavascriptToLoad($event, $data = null) {
+			if(Configure::read('debug') == 0){
+				return false;
+			}
+			
 			return array(
 				'/debug_kit/js/js_debug_toolbar'
 			);
