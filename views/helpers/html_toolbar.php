@@ -139,17 +139,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			return;
 		}
 		$view =& ClassRegistry::getObject('view');
-		$head = $this->Html->css('/debug_kit/css/debug_toolbar');
-		if (isset($view->viewVars['debugToolbarJavascript'])) {
-			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
-				if ($script) {
-					$head .= $this->Html->script($script);
-				}
-			}
-		}
-		if (preg_match('#</head>#', $view->output)) {
-			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
-		}
+		
 		$toolbar = $view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		if (preg_match('#</body>#', $view->output)) {
 			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);

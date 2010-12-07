@@ -195,7 +195,7 @@ class ToolbarComponent extends Object {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
-		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
+		$controller->set(array('debugToolbarPanels' => $vars));
 		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start', true));
 	}

@@ -31,6 +31,18 @@
 			return 'DebugKit.Toolbar';
 		}
 
+		public function onRequireCssToLoad($event, $data = null) {
+			return array(
+				'/debug_kit/css/debug_toolbar'
+			);
+		}
+
+		public function onRequireJavascriptToLoad($event, $data = null) {
+			return array(
+				'/debug_kit/js/js_debug_toolbar'
+			);
+		}
+
 		public function onSetupConfig(){
 			return Configure::load('debug_kit.config');
 		}
