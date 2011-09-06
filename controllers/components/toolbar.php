@@ -239,7 +239,7 @@ class ToolbarComponent extends Object {
 		if (Configure::read('Cache.disable') !== true) {
 			Cache::config('debug_kit', array(
 				'duration' => $this->cacheDuration,
-				'engine' => 'File',
+				'engine' => Configure::write('Cache.engine'),
 				'path' => CACHE
 			));
 			Cache::config('default');
