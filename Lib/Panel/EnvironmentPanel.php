@@ -16,7 +16,7 @@ class EnvironmentPanel extends DebugPanel {
  *
  * @return array
  */
-	public function beforeRender (Controller $controller) {
+	public function beforeRender(Controller $controller) {
 		parent::beforeRender ($controller);
 
 		$return = array();
@@ -57,6 +57,10 @@ class EnvironmentPanel extends DebugPanel {
 			 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR', 'LOG_ERROR', 'FULL_BASE_URL'), '');
 		$var = get_defined_constants(true);
 		$return['app'] = array_diff_key($var['user'], $return['cake'], $cakeConstants);
+
+		if (isset($var['hidef'])) {
+			$return['hidef'] = $var['hidef'];
+		}
 
 		return $return;
 	}
